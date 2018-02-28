@@ -1,2 +1,3 @@
 # CB_Robotics
-CB Robotics
+
+Colonel By Robotics Club
