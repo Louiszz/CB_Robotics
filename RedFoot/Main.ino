@@ -9,7 +9,7 @@ Servo Servos[] = {gripper, vertical, horizontal, rotation};
 
 int tops[4] = {180, 90, 85, 180};  // Grip;    Down; Out; Counterclockwise
 int bottoms[4] = {120, 40, 10, 0}; // Release; Up;   In;  Clockwise
-// (65, 70)
+
 int dests[4] = {180, 50, 10, 90};
 int currtime = 0;
 int inbyte = 0;
