@@ -1,18 +1,23 @@
-#include <MotorControl.h>
+#include <MeMCore.h>
 
-MotorControl right(1);
-MotorControl left(2);
+MeLineFollower lineIn(PORT_2);
 
-int rspeed = 120;
-int lspeed = 120;
+MeDCMotor MotorL(M1);
+MeDCMotor MotorR(M2);
+
+
 
 void setup() {
   Serial.begin(9600);
-  pinMode(A0, OUTPUT);
-  pinMode(A1, OUTPUT);
 }
 
 void loop() {
-  right.forward(rspeed);
-  left.forward(lspeed);
+
+  lineL = lineIn.readSensor1();
+  lineR = lineIn.readSensor2();
+  
+  if ((millis() % 500) == 1) {
+    Serial.println((String)lineL + " -- " + (String)lineR);
+  }
+
 }
