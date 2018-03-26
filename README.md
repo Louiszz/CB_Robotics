@@ -8,4 +8,4 @@ TLRDetour -> a two-wheeled robot that navigates a maze;
 RedFoot -> a robotic arm that sorts colored bins.
 
 The files inside are starting points / templates to fill in.  
-We will update as we program the robots.
+We will update them as we program the robots.
