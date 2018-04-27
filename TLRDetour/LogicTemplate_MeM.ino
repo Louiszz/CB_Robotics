@@ -127,7 +127,6 @@ void loop() {
   }
   
   if ((millis() - finish_time > 500) && (!t_state)) {lsens = lfast; rsens = rfast;}
-//  lcd.setCursor(0,0); lcd.print(posx); lcd.print(" "); lcd.print(posy); lcd.print(" "); lcd.print(obstaclesy[2][2]); lcd.print(" "); lcd.print(obstaclesy[1][2]); lcd.print(" ");
 //  if (t_state = 0) {
 //    if ((state == 0) && (obstaclesy[posx][posy])) obstacle_detect = true;
 //    if ((state == 1) && (obstaclesx[posx][posy])) obstacle_detect = true;
@@ -199,7 +198,7 @@ void frontline() {
                 else if((millis() - start_time) > 800) intersect = 0;
 }
 
-void turn_right() { // Obstacle detection included
+void turn_right() {
   rsold = rs;
   lsold = ls;
   ls = lineIn.readSensor1();
@@ -212,7 +211,6 @@ void turn_right() { // Obstacle detection included
   
   if (turn_time_c < turn_time_r * 4) {obstacle_detect = false;}
   if ((turn_time_c > turn_time_r) && (!ls) && (!rs) && (lsold) && (!rsold) && (t_state == 1)) {
-//    lcd.setCursor(0,1); lcd.print(lastobs); lcd.print(" "); lcd.print(countint); lcd.print(" "); lcd.print(t_state);
     if ((countint - lastobs) < 5) {
       tr = false;
       obstacle_right = true;
@@ -242,7 +240,7 @@ void turn_right() { // Obstacle detection included
   }
 }
 
-void turn_left() { // Obstacle detection included
+void turn_left() {
   rsold = rs;
   lsold = ls;
   ls = lineIn.readSensor1();
