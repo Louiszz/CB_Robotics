@@ -1,14 +1,10 @@
-// Original
-
 #include <UltrasonicControl.h>
 #include <IRControl.h>
 #include <MotorControl.h>
-//#include <LiquidCrystal.h>
 
 MotorControl right(1);
 MotorControl left(2);
 UltrasonicControl us(3, 2);
-//LiquidCrystal lcd(8, 9, 10, 11, 12, 13);
 
 #define lfast 180
 #define rfast 180
@@ -54,8 +50,6 @@ bool unforced = false; // unforced turn (no obstacle ahead, but turning)
 bool obstaclesx[5][7];
 bool obstaclesy[6][6];
 uint8_t history[5][6];
-uint8_t historyold[5][6];
-uint8_t historyoldold[5][6];
 bool start_obs = false;
 float obstimecof = 1.8;
 int lastobs = 0;
@@ -98,8 +92,8 @@ void setup() {
   for (i = 1; i <= destx; i++) {
     for (j = 1; j <= desty; j++) {
       history[i][j] = 4;
-      historyold[i][j] = 4;
-      historyoldold[i][j] = 4;
+      //historyold[i][j] = 4;
+      //historyoldold[i][j] = 4;
     }
   }
 }
@@ -388,8 +382,8 @@ void flip() {
     loopbreak = false;
     for (i = 1; i <= destx; i++) {
       for (j = 1; j <= desty; j++) {
-        historyoldold[i][j] = historyold[i][j];
-        historyold[i][j] = history[i][j];
+        //historyoldold[i][j] = historyold[i][j];
+        //historyold[i][j] = history[i][j];
         history[i][j] = 4;
       }
     }
@@ -408,9 +402,6 @@ void flip() {
 */
 
 void logic() {
-
-/* logic goes here. Example:
-
   if ((state == 0) && (obstaclesy[posx][posy])) {
     if      (!obstaclesx[posx][posy])      tr = true;
     else if (!obstaclesx[posx - 1][posy])  tl = true;
@@ -422,7 +413,32 @@ void logic() {
     else if (!obstaclesy[posx][posy - 1])  tr = true;
     else                                   reverse = true;
   }
-  */
+
+  else if ((state == 2) && (obstaclesy[posx][posy - 1])) {
+    if      (!obstaclesx[posx][posy])      tl = true;
+    else if (!obstaclesx[posx - 1][posy])  reverse = true;
+    else                                   reverse = true;
+  }
+
+  else if ((state == 2) && (!obstaclesy[posx][posy - 1])) {
+    if (posx == 4)                          tr = true; 
+    else                                    tl = true; 
+  }
+
+  else if ((state == 3) && (obstaclesx[posx - 1][posy])) {
+    if      (!obstaclesy[posx][posy])      tr = true;
+    else                                   reverse = true;
+  }
+
+    else if ((state == 3) && (!obstaclesx[posx - 1][posy])) {
+    if (posy == 4)                        tl = true; 
+    else                                  tr = true; 
+  }
+  if (history[posx][posy] == state) {
+    
+  }
+  history[posx][posy] = state;
+  
 }
 
 bool check_obstacle (int next_state) { //At current position of posx, posy and want to turn into next_state, whether obstacle.
