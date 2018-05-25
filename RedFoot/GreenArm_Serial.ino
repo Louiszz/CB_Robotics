@@ -205,24 +205,17 @@ void loop() {
     }
     if (arrtex) {
       switch(extst) {
-
       case 0: {
         redtime = 0;
         dests [2] = tops[2];
         dests [1] = tops[1];
         extst = 1;
-        }
-        break;
+        } break;
       case 1: {
-        extst = 2;
-      }
-      break;
-      case 2: {
         grip(true);
-        extst = 3;
-      }
-      break;
-      case 3: {
+        extst = 2;
+      } break;
+      case 2: {
         dests[2] = percent(tops[2], bottoms[2], 50);
         dests[1] = tops[1]; //percent(tops[1], bottoms[1], 90);
         if (raspi) {
@@ -233,28 +226,21 @@ void loop() {
           updateColors();
           printColor();
         }
-        extst = 4;
-      }
-      break;
-      case 4: if (!blockplaced) {
-        if (color == "Green") {
-          dests[3] = 85;
-        }
-        else if (color == "Blue") {
-          dests[3] = 45;
-        }
+        extst = 3;
+      } break;
+      case 3: if (!blockplaced) {
+        if (color == "Green") dests[3] = 85;
+        else if (color == "Blue") dests[3] = 45;
         else if (color == "Red") {
           dests[3] = 5;
           redtime = 1200;
         }
-        else if (color == "Black") {
-          dests[3] = 180;
-        }
+        else if (color == "Black") dests[3] = 180;
+        
         blockplaced = true;
-        extst = 5;
-      }
-      break;
-      case 5: {
+        extst = 4;
+      } break;
+      case 4: {
         if (color != "Black") {
           dests[2] = tops[2];
           dests[1] = tops[1] - 10;
@@ -263,23 +249,23 @@ void loop() {
             dests[1] = tops[1] - 10;
             dests[2] = tops[1] - 10;
         }
+        extst = 5;
+      }
+      break;
+      case 5: {
+        grip(false);
         extst = 6;
       }
       break;
       case 6: {
-        grip(false);
+        dests[2] = bottoms[2] + 40;
+        dests[1] = bottoms[1] - 10;
         extst = 7;
       }
       break;
       case 7: {
-        dests[2] = bottoms[2] + 40;
-        dests[1] = bottoms[1] - 10;
-        extst = 8;
-      }
-      break;
-      case 8: {
         resetLoop();
-        extst = 9;
+        extst = 8;
       }
       break;
       }
