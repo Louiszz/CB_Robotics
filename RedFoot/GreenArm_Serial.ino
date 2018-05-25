@@ -168,22 +168,8 @@ void loop() {
         extending = true;
         reftime = millis();
         done = false;
-        /* if(target<=2) extension = 1;
-        else if(target<=3) extension = 2;
-        else if (target<=4) extension = 3;
-        else if(target<=5) extension = 4;
-        else {
-          extension = 5;
-        } */
         extension = 5;
         count = 100;
-        
-        /* extendclose = false;
-        extendfar = false;
-        extendmiddle = false;
-        if (target >= 9)     extendfar = true;
-        else if (target <= 6) extendclose = true;
-        else                  extendmiddle = true; */
         
         //Serial.println("Extending");
         extst = 0;
@@ -202,68 +188,7 @@ void loop() {
     }
   }
   else if (!done) {             // relocate blacks to loading dock
-//    if (!relocateblackold) dests[3] = 115;
-////    delaytime = 30;
-//    arrtrel = arrived();
-////    Serial.println("Blackpos: " + (String)(blackpos));
-//    if (arrtrel) {
-////      Serial.print("relst: " + (String)(relst));
-////      Serial.println(" Time (millis): " + (String)(timex));
-//      if (relst == 0) {
-//        grip(false);
-//        if (blackpos == 0) {
-//          dests[1] = 75;
-//          dests[2] = 80;
-//        }
-//        else if (blackpos == 1) {
-//          dests[1] = 65;
-//          dests[2] = 50;
-//        }
-//        else if (blackpos == 2) {
-//          dests[1] = 55;
-//          dests[2] = 30;
-//        }
-//        else {
-//          blackpos += -1;
-//        }
-//        relst = 1;
-//      }
-//      else if (relst == 1) {
-//        grip(true);
-//        relst = 2;
-//      }
-//      else if (relst == 2) {
-//        dests[2] = 50;
-//        dests[1] = 0;
-//        relst = 3;
-//      }
-//      else if (relst == 3) {
-//        Serial.print("Blackpos: " + (String)(blackpos));
-//        Serial.println(" 180 - 12 * blackpos: " + (String)(180 - 12 * blackpos));
-//        dests[3] = 180 - 12 * blackpos;
-//        relst = 4;
-//      }
-//      else if (relst == 4) {
-//        dests[2] = 90;
-//        dests[1] = 70;
-//        relst = 5;
-//      }
-//      else if (relst == 5) {
-//        grip(false);
-//        relst = 6;
-//      }
-//      else if (relst == 6) {
-//        dests[2] = 50;
-//        dests[1] = 0;
-//        relst = 7;
-//      }
-//      else if (relst == 7) {
-//        blackpos -= 1;
-//        if (blackpos <= -1) done = true;
-//        dests[3] = 115;
-//        relst = 0;
-//      }
-//    }
+
   }
   
   if (extending) {
@@ -282,33 +207,13 @@ void loop() {
       switch(extst) {
 
       case 0: {
-        //Serial.print("Angle: " + (String)(rotation.read()));
         redtime = 0;
-        //Serial.println("Extend " + extension);
-        if (extension == 1) {
-          dests[2] = percent(tops[2], bottoms[2], 60); // 60% to top from bottom
-        }else if (extension == 2) {
-          dests [2] = percent(tops[2], bottoms[2], 75); // 75%
-          dests [1] = percent(tops[1], bottoms[1], 20); // 20%
-        }else if (extension == 3) {
-          //dests [2] = 175; // 90%
-          //dests [1] = 59;
-        }else if (extension == 4) {
-          //dests [2] = 91;
-          //dests [1] = 70;
-        }
-        else if (extension == 5) {
-          dests [2] = tops[2];
-          dests [1] = tops[1];
-        }
-        
+        dests [2] = tops[2];
+        dests [1] = tops[1];
         extst = 1;
         }
         break;
       case 1: {
-        //Serial.println("Got to 1");
-//        if (extendmiddle) dests[1] = 55;
-//        else if (extendfar) dests[1] = 85;
         extst = 2;
       }
       break;
@@ -333,37 +238,17 @@ void loop() {
       break;
       case 4: if (!blockplaced) {
         if (color == "Green") {
-          //Serial.println("Greenpos: " + (String)(greenpos));
-          dests[3] = 85 + 12 * greenpos;
-//          greenpos ++;
+          dests[3] = 85;
         }
         else if (color == "Blue") {
-          //Serial.println("Bluepos: " + (String)(bluepos));
-          dests[3] = 45 + 12 * bluepos;
-//          bluepos ++;
+          dests[3] = 45;
         }
         else if (color == "Red") {
-          //Serial.println("Redpos: " + (String)(redpos));
-          dests[3] = 5 + 12 * redpos;
-//          redpos ++;
+          dests[3] = 5;
           redtime = 1200;
         }
         else if (color == "Black") {
-          //Serial.println("Blackpos: " + (String)(blackpos));
           dests[3] = 180;
-//          if (blackpos == 0) {
-//            blackpos ++;
-//          }
-//          else if (blackpos == 1) {
-//            dests[1] = 65;
-//            dests[2] = 50;
-//            blackpos ++;
-//          }
-//          else if (blackpos == 2) {
-//            dests[1] = 55;
-//            dests[2] = 30;
-//            blackpos ++;
-//          }
         }
         blockplaced = true;
         extst = 5;
@@ -402,34 +287,6 @@ void loop() {
   }
 
 
-  /*if (Serial.available() > 0) { // User interface and variable queries
-    inbyte = Serial.read();
-    if ((inbyte >= 48) && (inbyte <= 57)) {
-      outstring += (String)(inbyte - 48);
-    }
-    else if ((inbyte >= 65) && (inbyte <= 68)) {
-      selectservo = inbyte - 65;
-      Serial.println("Selected servo: " + (String)(selectservo));
-    }
-    else if (inbyte == 33) {
-      posserial = outstring.toInt();
-      dests[selectservo] = posserial;
-      Serial.println("Posserial: " + outstring);
-      outstring = "";
-    }
-    else if (inbyte == 71) Serial.println("Arrived: " + (String)(arrived()));//grip(true);
-    else if (inbyte == 82) grip(false);
-    else if (inbyte == 63) {
-      updateColors();
-      printColor();
-    }
-    else if (inbyte == 70) {
-      updateDistance();
-      Serial.print(cm);
-      Serial.print("cm");
-      Serial.println();
-    }
-  }*/
   if (!raspi) {
   
     if ((millis() > 200) && (millis() < 1000)) { // Calibrate colors to green
